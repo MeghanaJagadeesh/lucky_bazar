@@ -1,21 +1,34 @@
 package com.hexagon.luckyBazar.controller;
 
-import com.hexagon.luckyBazar.dto.Delegate;
-import com.hexagon.luckyBazar.dto.Stalls;
-import com.hexagon.luckyBazar.dto.VisitRequest;
+import com.hexagon.luckyBazar.dto.*;
 import com.hexagon.luckyBazar.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class VisitController {
 
     @Autowired
     VisitService visitService;
+
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestParam String username, @RequestParam String password){
+        return visitService.login(username, password);
+    }
+
+    @GetMapping("/exportAll/delegateData")
+    public ResponseEntity<?> exportAllData(){
+        return visitService.export();
+    }
 
     @PostMapping("/add/stalls")
     public ResponseEntity<String> addStalls(@RequestBody Stalls stalls) {
@@ -28,7 +41,7 @@ public class VisitController {
     }
 
     @GetMapping("/eligible/any-one-day")
-    public List<Delegate> eligibleAnyOneDay() {
+    public Set<Delegate> eligibleAnyOneDay() {
         return visitService.getEligibleAnyOneDay();
     }
 
@@ -38,7 +51,7 @@ public class VisitController {
     }
 
     @GetMapping("/eligible/each-day")
-    public List<Delegate> eligibleEachDay() {
+    public Set<Delegate> eligibleEachDay() {
         return visitService.getEligibleEachDay();
     }
 
@@ -48,7 +61,22 @@ public class VisitController {
     }
 
     @GetMapping("/export/delegate/byStall")
-    public List<Delegate> export(@RequestParam int stallId) {
+    public List<DelegateVisitDetailsDTO> export(@RequestParam int stallId) {
         return visitService.exportDelegates(stallId);
+    }
+
+    @GetMapping("/get/allstalls")
+    public List<Stalls> getStalls(){
+        return visitService.getAllStalls();
+    }
+
+    @PostMapping("/declare/winners")
+    public ResponseEntity<?> declare(@RequestBody Winners winners){
+       return visitService.saveWinners(winners);
+    }
+
+    @GetMapping("/get/winners")
+    public List<Winners> getWinners(){
+        return visitService.getWinners();
     }
 }

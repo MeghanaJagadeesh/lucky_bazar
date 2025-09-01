@@ -6,18 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-
-@Data
 @Entity
-public class Delegate {
-
+@Data
+public class Winners {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String email;
     private String company;
-    private ZonedDateTime createdAt;
+    private String position;
 }

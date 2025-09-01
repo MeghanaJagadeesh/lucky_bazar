@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @Entity
@@ -13,14 +14,19 @@ public class Visit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delegate_id")
     private Delegate delegate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stall_id")
     private Stalls stall;
 
     private int dayNumber;
-    private LocalDateTime visitedAt;
+
+    @Column(length = 3000)
+    private String feedBack;
+
+    private ZonedDateTime visitedAt;
+
 }

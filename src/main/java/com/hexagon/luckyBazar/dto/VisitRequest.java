@@ -10,6 +10,12 @@ public class VisitRequest {
     private String id;
     private String name;
     private String email;
-    private String phoneNum;
     private String company;
+    private String feedBack;
+
+    private Integer ratings;
+    private String areaOfInterest;
+    private String insightGained;
+    private String suggestions;
+    private String followUp;
 }

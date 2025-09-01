@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StallRepo extends JpaRepository<Stalls, Integer> {
     Stalls findByStallCode(String stallCode);
+    Stalls findByNameAndStallCode(String name, String stallCode);
 }
